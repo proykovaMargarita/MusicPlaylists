@@ -4,8 +4,8 @@ public class SongBuilder {
     private final int ID;
     private final String title;
     private final String artist;
-    private String album;
     private final int durationSeconds;
+    private String album;
     private Integer year;
     private Genre genre;
 
@@ -15,21 +15,6 @@ public class SongBuilder {
         this.artist = artist;
         this.durationSeconds = durationSeconds;
     }
-
-    protected int getID() { return ID;}
-
-    protected String getTitle() { return title; }
-
-    protected String getArtist() { return artist; }
-
-    protected String getAlbum() { return album; }
-
-    protected int getDurationSeconds() { return durationSeconds; }
-
-    protected Integer getYear() { return year; }
-
-    protected Genre getGenre() { return genre; }
-
 
     public SongBuilder setAlbum(String album){
         this.album = album;
@@ -47,4 +32,19 @@ public class SongBuilder {
     public Song build(){
         return new Song(this);
     }
+
+
+    protected int getID() { return ID;}
+
+    protected String getTitle() { return title; }
+
+    protected String getArtist() { return artist; }
+
+    protected String getAlbum() { return album; }
+
+    protected int getDurationSeconds() { return durationSeconds; }
+
+    protected Integer getYear() { return year; }
+
+    protected Genre getGenre() { return genre; }
 }

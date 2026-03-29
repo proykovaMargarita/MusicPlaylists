@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MusicLibrary {
-    private List<Song> songs = new ArrayList<>();
-    private List<Playlist> playlists = new ArrayList<>();
-    private List<PlayHistoryEntry> history = new ArrayList<>();
+    private List<Song> songs;
+    private List<Playlist> playlists;
+    private List<PlayHistoryEntry> history;
 
     public MusicLibrary() {
         this.songs = new ArrayList<>();
@@ -19,6 +19,15 @@ public class MusicLibrary {
         this.songs = (songs != null) ? songs : new ArrayList<>();
         this.playlists = (playlists != null) ? playlists : new ArrayList<>();
         this.history = (history != null) ? history : new ArrayList<>();
+    }
+
+    public Song getSongById(int id) {
+        for (Song song : songs) {
+            if (song.getID() == id) {
+                return song;
+            }
+        }
+        return null;
     }
 
     public List<Song> getSongs() { return songs; }

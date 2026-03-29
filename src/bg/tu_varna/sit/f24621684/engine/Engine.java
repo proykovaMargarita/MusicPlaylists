@@ -40,7 +40,6 @@ public class Engine {
 
             if (commands.containsKey(commandName)) {
                 try {
-                    // Изпълнение и принтиране на резултата
                     String result = commands.get(commandName).execute(args);
                     System.out.println(result);
                 } catch (Exception e) {

@@ -20,6 +20,7 @@ public class CommandFactory {
         commands.put("open", new OpenCommand(stateManager, fileService));
         commands.put("save", new SaveCommand(stateManager, fileService));
         commands.put("saveas", new SaveAsCommand(stateManager, fileService));
+        commands.put("close", new CloseCommand(stateManager));
 
         helpCommand.setCommands(commands);
 

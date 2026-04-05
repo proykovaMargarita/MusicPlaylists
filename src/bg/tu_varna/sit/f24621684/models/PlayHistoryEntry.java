@@ -12,7 +12,7 @@ public class PlayHistoryEntry {
     public PlayHistoryEntry(Song song, LocalDateTime time) {
         this.song = song;
         this.time = time;
-        this.playlistName = "None";
+        this.playlistName = "";
     }
     public PlayHistoryEntry(Song song, LocalDateTime time, String playlistName) {
         this.song = song;

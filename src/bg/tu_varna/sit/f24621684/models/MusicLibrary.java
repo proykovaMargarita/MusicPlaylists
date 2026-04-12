@@ -21,6 +21,15 @@ public class MusicLibrary {
         this.history = (history != null) ? history : new ArrayList<>();
     }
 
+    public void addSong(Song song){
+        for (Song s : songs){
+            if (s.equals(song)){
+                throw new IllegalArgumentException("Song already exists.");
+            }
+        }
+        songs.add(song);
+    }
+
     public Song getSongById(int id) {
         for (Song song : songs) {
             if (song.getID() == id) {

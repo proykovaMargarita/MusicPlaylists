@@ -121,7 +121,7 @@ public class ParseService {
         return null;
     }
 
-    protected static int parseDurationToSeconds(String durationStr){
+    public static int parseDurationToSeconds(String durationStr){
         String[] parts = durationStr.split(":");
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid duration format, use: (mm:ss).");

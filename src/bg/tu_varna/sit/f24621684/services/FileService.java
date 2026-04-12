@@ -12,7 +12,9 @@ public class FileService {
     public MusicLibrary load(String path) throws IOException {
         MusicLibrary library = new MusicLibrary();
         File file = new File(path);
-        if (!file.exists()) return library;
+        if (!file.exists()) {
+            throw new FileNotFoundException("File not found: " + path);
+        }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
@@ -27,18 +29,23 @@ public class FileService {
                     continue;
                 }
 
-                switch (currentSection){
-                    case "[SONGS]":
-                        library.getSongs().add(ParseService.parseSong(line));
-                        break;
-                    case "[PLAYLISTS]":
-                        library.getPlaylists().add(ParseService.parsePlaylist(line, library));
-                        break;
-                    case "[HISTORY]":
-                        library.getHistory().add(ParseService.parseHistory(line, library));
-                        break;
-                    default:
-                        break;
+                try{
+                    switch (currentSection){
+                        case "[SONGS]":
+                            library.getSongs().add(ParseService.parseSong(line));
+                            break;
+                        case "[PLAYLISTS]":
+                            library.getPlaylists().add(ParseService.parsePlaylist(line, library));
+                            break;
+                        case "[HISTORY]":
+                            library.getHistory().add(ParseService.parseHistory(line, library));
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (Exception e){
+                    System.out.println("Invalid file format at line: " + line);
+                    System.exit(1);
                 }
             }
         }

@@ -7,15 +7,33 @@ import bg.tu_varna.sit.f24621684.services.FileService;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Команда за отваряне на файл
+ * @author Margarita Proykova
+ */
 public class OpenCommand implements Command {
+    /** Текущо състояние на програмата */
     private final StateManager stateManager;
+    /** Обект за работа с файловата система*/
     private final FileService fileService;
 
+    /**
+     * Конструктор за създаване на командата Open.
+     * @param stateManager Текущо състояние на програмата
+     * @param fileService Обект за работа с файловата система
+     */
     public OpenCommand(StateManager stateManager, FileService fileService) {
         this.stateManager = stateManager;
         this.fileService = fileService;
     }
 
+    /**
+     * Изпълнява командата за отваряне на файл.
+     * Проверява дали е въведен път до файла и дали съществува такъв файл.
+     * В противен случай, създава нов файл с празно съдържание.
+     * @param args Масив от низове, съдържащ път до файла.
+     * @return String съобщение, което се извежда на потребителя в конзолата.
+     */
     @Override
     public String execute(String[] args) {
         if (args.length < 1) return "Error: Usage: open <file_path>";
@@ -43,6 +61,10 @@ public class OpenCommand implements Command {
 
     }
 
+    /**
+     * Извежда описанието на командата.
+     * @return Описание на командата и параметър, който тя очаква.
+     */
     @Override
     public String getDescription() {
         return "(open <file>) opens <file>>";

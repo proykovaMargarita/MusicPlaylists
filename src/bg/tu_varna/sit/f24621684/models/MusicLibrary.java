@@ -39,6 +39,15 @@ public class MusicLibrary {
         return null;
     }
 
+    public Playlist getPlaylistByName(String name) {
+        for (Playlist p : playlists) {
+            if (p.getName().equalsIgnoreCase(name)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
     public List<Song> getSongs() { return songs; }
     public void setSongs(List<Song> songs) { this.songs = songs; }
 

@@ -1,5 +1,7 @@
 package bg.tu_varna.sit.f24621684.models.song;
 
+import bg.tu_varna.sit.f24621684.services.ParseService;
+
 import java.util.Objects;
 
 public class Song {
@@ -33,6 +35,28 @@ public class Song {
     @Override
     public int hashCode(){
         return Objects.hash(title.toLowerCase(), artist.toLowerCase());
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format("ID: %d | Song: %s by %s [%s]",
+                ID, artist, title, ParseService.formatSecondsToDuration(durationSeconds)));
+
+        if (album != null && !album.isEmpty()) {
+            sb.append(" | Album: ").append(album);
+        }
+
+        if (year != null && year > 0) {
+            sb.append(" | Year: ").append(year);
+        }
+
+        if (genre != null) {
+            sb.append(" | Genre: ").append(genre);
+        }
+
+        return sb.toString();
     }
 
     public int getID() { return ID;}

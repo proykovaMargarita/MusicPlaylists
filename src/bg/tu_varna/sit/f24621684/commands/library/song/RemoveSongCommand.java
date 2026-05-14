@@ -1,4 +1,4 @@
-package bg.tu_varna.sit.f24621684.commands.library;
+package bg.tu_varna.sit.f24621684.commands.library.song;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;

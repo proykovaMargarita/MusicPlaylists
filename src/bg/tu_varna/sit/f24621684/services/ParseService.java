@@ -56,7 +56,7 @@ public class ParseService {
             throw new IllegalArgumentException("Invalid playlist data: " + line);
         }
 
-        List<Song> songs = new ArrayList<>();
+        ArrayList<Song> songs = new ArrayList<>();
         if (!parts[1].isEmpty()) {
             String[] songIds = parts[1].split(",");
             for (String idStr : songIds) {
@@ -136,7 +136,7 @@ public class ParseService {
         return (minutes * 60) + seconds;
     }
 
-    protected static String formatSecondsToDuration(int durationScnd){
+    public static String formatSecondsToDuration(int durationScnd){
         int minutes = durationScnd / 60;
         int seconds = durationScnd % 60;
 

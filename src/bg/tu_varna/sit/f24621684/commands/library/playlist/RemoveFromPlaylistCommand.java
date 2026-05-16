@@ -7,18 +7,29 @@ import bg.tu_varna.sit.f24621684.models.Playlist;
 import bg.tu_varna.sit.f24621684.models.song.Song;
 
 /**
- * Команда за премахване на песен от плейлист.
+ * Команда за премахване на определена песен от съществуващ плейлист.
  * @author Margarita Proykova
  */
 public class RemoveFromPlaylistCommand implements Command {
+    /** Мениджър на състоянието на приложението */
     private final StateManager stateManager;
+    /** Препратка към музикалната библиотека */
     private final MusicLibrary library;
 
+    /**
+     * Конструктор за инициализиране на командата за премахване.
+     * @param stateManager обект за управление на състоянието.
+     */
     public RemoveFromPlaylistCommand(StateManager stateManager) {
         this.stateManager = stateManager;
         this.library = stateManager.getLibrary();
     }
 
+    /**
+     * Намира песента и плейлиста и изтрива връзката между тях.
+     * @param args очаква име на плейлиста и ID на песента.
+     * @return статус съобщение за успеха на операцията.
+     */
     @Override
     public String execute(String[] args) {
         if (!stateManager.isFileOpen()) return "Error: No file is currently open.";
@@ -48,6 +59,10 @@ public class RemoveFromPlaylistCommand implements Command {
         }
     }
 
+    /**
+     * Описание на синтаксиса на командата.
+     * @return Описание на командата.
+     */
     @Override
     public String getDescription() {
         return "(removefromplaylist <playlistName> <songId>) removes a song from a playlist";

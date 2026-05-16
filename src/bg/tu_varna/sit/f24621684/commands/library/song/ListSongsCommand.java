@@ -6,13 +6,27 @@ import bg.tu_varna.sit.f24621684.models.song.Song;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Команда за извеждане на списък с песни с поддръжка на филтри.
+ * @author Margarita Proykova
+ */
 public class ListSongsCommand implements Command {
+    /** Мениджър на състоянието за достъп до песните */
     private final StateManager stateManager;
 
+    /**
+     * Конструктор за създаване на командата ListSongs.
+     * @param stateManager обект за управление на състоянието.
+     */
     public ListSongsCommand(StateManager stateManager) {
         this.stateManager = stateManager;
     }
 
+    /**
+     * Извежда всички песни или филтриран подмножество въз основа на аргументите.
+     * @param args опционални филтри във формат key=value (artist, genre, year).
+     * @return списък с намерените песни или съобщение при липса на резултати.
+     */
     @Override
     public String execute(String[] args) {
         if (!stateManager.isFileOpen()) {
@@ -77,6 +91,10 @@ public class ListSongsCommand implements Command {
         return sb.toString();
     }
 
+    /**
+     * Връща описание на командата и нейния синтаксис.
+     * @return Описание на командата.
+     */
     @Override
     public String getDescription() {
         return "listsongs [artist=<artist>] [genre=<genre>] [year=<year>] - Lists and filters songs.";

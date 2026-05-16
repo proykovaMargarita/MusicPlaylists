@@ -34,9 +34,7 @@ public class CloseCommand implements Command {
 
         String fileName = stateManager.getCurrentFilePath();
 
-        stateManager.setLibrary(new MusicLibrary());
-        stateManager.setCurrentFilePath(null);
-        stateManager.setFileOpen(false);
+        stateManager.reset();
 
         return "Successfully closed " + fileName;
     }

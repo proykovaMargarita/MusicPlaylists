@@ -9,18 +9,29 @@ import bg.tu_varna.sit.f24621684.models.song.Song;
 import java.util.ArrayList;
 
 /**
- * Команда за създаване на нов плейлист.
+ * Команда за създаване на нов празен плейлист с име и описание.
  * @author Margarita Proykova
  */
 public class CreatePlaylistCommand implements Command {
+    /** Обект за управление на състоянието на библиотеката */
     private final StateManager stateManager;
+    /** Текущата музикална библиотека */
     private final MusicLibrary library;
 
+    /**
+     * Конструктор за създаване на командата CreatePlaylist.
+     * @param stateManager мениджър на състоянието.
+     */
     public CreatePlaylistCommand(StateManager stateManager) {
         this.stateManager = stateManager;
         this.library = stateManager.getLibrary();
     }
 
+    /**
+     * Проверява за уникалност на името и създава нов плейлист в библиотеката.
+     * @param args очаква име на плейлиста и опционално описание.
+     * @return статус на операцията.
+     */
     @Override
     public String execute(String[] args) {
         if (!stateManager.isFileOpen()) return "Error: No file is currently open.";
@@ -49,6 +60,10 @@ public class CreatePlaylistCommand implements Command {
         return "Successfully created playlist.";
     }
 
+    /**
+     * Връща описание на синтаксиса на командата.
+     * @return Описание на командата.
+     */
     @Override
     public String getDescription() {
         return "(createplaylist <name> [<description>]) creates a new playlist";

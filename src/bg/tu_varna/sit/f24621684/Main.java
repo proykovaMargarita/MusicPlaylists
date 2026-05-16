@@ -13,7 +13,7 @@ public class Main {
         StateManager stateManager = new StateManager();
         FileService fileService = new FileService();
 
-        Engine engine = new Engine(stateManager);
+        Engine engine = new Engine();
 
         Map<String, Command> commands = CommandFactory.createCommands(engine, stateManager, fileService);
 

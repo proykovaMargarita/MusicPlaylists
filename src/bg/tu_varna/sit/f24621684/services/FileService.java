@@ -8,7 +8,18 @@ import bg.tu_varna.sit.f24621684.models.song.Song;
 import java.io.*;
 import java.util.List;
 
+/**
+ * Сервиз за управление на файлови операции, свързани със зареждане и записване на музикалната библиотека.
+ * @author Margarita Proykova
+ */
 public class FileService {
+
+    /**
+     * Зарежда музикалната библиотека от текстов файл по зададен път.
+     * @param path път до файла, който съдържа данните за библиотеката.
+     * @return обект от тип MusicLibrary, попълнен с данни от файла.
+     * @throws IOException при проблем с четенето на файла.
+     */
     public MusicLibrary load(String path) throws IOException {
         MusicLibrary library = new MusicLibrary();
         File file = new File(path);
@@ -52,6 +63,12 @@ public class FileService {
         return library;
     }
 
+    /**
+     * Записва текущото състояние на музикалната библиотека в текстов файл.
+     * @param path път до файла, в който ще се запишат данните.
+     * @param library обектът на библиотеката, който трябва да бъде сериализиран.
+     * @throws IOException при проблем с писането във файла.
+     */
     public void save(String path, MusicLibrary library) throws IOException {
         try (PrintWriter writer = new PrintWriter(new FileWriter(path))) {
             writer.println("[SONGS]");
@@ -96,8 +113,4 @@ public class FileService {
             }
         }
     }
-
-
-
-
 }

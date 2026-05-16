@@ -7,17 +7,31 @@ import bg.tu_varna.sit.f24621684.models.Playlist;
 import bg.tu_varna.sit.f24621684.models.song.Song;
 
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * Команда за промяна на позицията на песен в рамките на плейлист.
+ * @author Margarita Proykova
+ */
 public class MoveCommand implements Command {
+    /** Мениджър на състоянието за достъп до данните */
     private final StateManager stateManager;
+    /** Текущата библиотека */
     private final MusicLibrary library;
 
+    /**
+     * Конструктор за инициализиране на командата за местене на песен.
+     * @param stateManager обект за управление на състоянието.
+     */
     public MoveCommand(StateManager stateManager) {
         this.stateManager = stateManager;
         this.library = stateManager.getLibrary();
     }
 
+    /**
+     * Премества песен от един индекс на друг в списъка на плейлиста.
+     * @param args очаква име на плейлист, начална позиция и крайна позиция.
+     * @return съобщение за успешно преместване или грешка при невалидни индекси.
+     */
     @Override
     public String execute(String[] args) {
         if (!stateManager.isFileOpen()) return "Error: No file is currently open.";
@@ -47,6 +61,10 @@ public class MoveCommand implements Command {
         return "Successfully moved song.";
     }
 
+    /**
+     * Описание на предназначението на командата.
+     * @return Описание на командата.
+     */
     @Override
     public String getDescription() {
         return "(move <playlistName> <fromPos> <toPos>) moves a song to a new position";

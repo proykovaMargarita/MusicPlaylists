@@ -3,6 +3,7 @@ package bg.tu_varna.sit.f24621684.commands.common;
 import bg.tu_varna.sit.f24621684.commands.Command;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Команда за извеждане на всички възможни команди
@@ -30,7 +31,9 @@ public class HelpCommand implements Command {
         StringBuilder sb = new StringBuilder();
         sb.append("The following commands are supported:\n");
 
-        for (Map.Entry<String, Command> entry : commands.entrySet()) {
+        Map<String, Command> sortedCommands = new TreeMap<>(commands);
+
+        for (Map.Entry<String, Command> entry : sortedCommands.entrySet()) {
             sb.append(String.format("%-15s %s%n", entry.getKey(), entry.getValue().getDescription()));
         }
 

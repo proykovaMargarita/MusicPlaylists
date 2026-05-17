@@ -58,6 +58,7 @@ public class CommandFactory {
         commands.put("topplaylists", new TopPlaylistsCommand(stateManager));
         commands.put("topartists", new TopArtistsCommand(stateManager));
         commands.put("lowactivity", new LowActivityCommand(stateManager));
+        commands.put("confirmdelete", new ConfirmDeleteCommand(stateManager));
 
         helpCommand.setCommands(commands);
 

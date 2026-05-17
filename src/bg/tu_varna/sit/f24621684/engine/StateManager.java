@@ -2,6 +2,9 @@ package bg.tu_varna.sit.f24621684.engine;
 
 import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Клас за управление на текущото състояние на приложението, включително заредената библиотека и файлови пътища.
  * @author Margarita Proykova
@@ -13,6 +16,8 @@ public class StateManager {
     private String currentFilePath;
     /** Флаг, индикиращ дали в момента има зареден файл */
     private boolean isFileOpen;
+    /** Списък от плейлисти с нисък процент слушания, които могат да бъдат изтрити*/
+    private List<String> pendingDeletions = new ArrayList<>();
 
     /**
      * Конструктор за създаване на нов мениджър на състоянието с начални стойности.
@@ -37,6 +42,11 @@ public class StateManager {
     public boolean isFileOpen() { return isFileOpen; }
     /** @param fileOpen статус на отворения файл */
     public void setFileOpen(boolean fileOpen) { isFileOpen = fileOpen; }
+
+    /** @return Списъкът с плейлисти, които могат да бъдат изтрити */
+    public List<String> getPendingDeletions() { return pendingDeletions; }
+    /** @param list плейлисти, които могат да бъдат изтрити */
+    public void setPendingDeletions(List<String> list) { this.pendingDeletions = list; }
 
     /**
      * Нулира състоянието на приложението, премахвайки библиотеката и файловия път.

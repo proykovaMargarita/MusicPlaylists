@@ -61,13 +61,25 @@ public class LowActivityCommand implements Command {
 
             if (totalPlays == 0) return "No activity found in specified period.";
 
+            List<String> toDelete = new ArrayList<>();
+
             StringBuilder sb = new StringBuilder("Playlists below " + threshold + "% activity:\n");
             for (String name : counts.keySet()) {
                 double percent = ((double) counts.get(name) / totalPlays) * 100;
                 if (percent < threshold) {
                     sb.append("- ").append(name).append(" (").append(String.format("%.2f", percent)).append("%)\n");
                 }
+                if (percent < 10) {
+                    toDelete.add(name);
+                }
             }
+
+            if (!toDelete.isEmpty()) {
+                stateManager.setPendingDeletions(toDelete);
+                sb.append("\nFound ").append(toDelete.size()).append(" playlist(s) below 10% activity.");
+                sb.append(" Type 'confirmdelete' to remove them permanently.");
+            }
+
             return sb.toString();
 
         } catch (Exception e) {

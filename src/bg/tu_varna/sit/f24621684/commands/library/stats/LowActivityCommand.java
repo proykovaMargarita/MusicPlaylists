@@ -3,6 +3,7 @@ package bg.tu_varna.sit.f24621684.commands.library.stats;
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
 import bg.tu_varna.sit.f24621684.models.PlayHistoryEntry;
+import bg.tu_varna.sit.f24621684.models.Playlist;
 import bg.tu_varna.sit.f24621684.services.ParseService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -45,11 +46,13 @@ public class LowActivityCommand implements Command {
             Map<String, Integer> counts = new HashMap<>();
             int totalPlays = 0;
 
-            for (PlayHistoryEntry entry : stateManager.getLibrary().getHistory()) {
-                String name = entry.getPlaylistName();
-                counts.put(name, 0);
-                if (!entry.getTime().isBefore(start) && !entry.getTime().isAfter(end)) {
+            for (Playlist playlist : stateManager.getLibrary().getPlaylists()) {
+                counts.put(playlist.getName(), 0);
+            }
 
+            for (PlayHistoryEntry entry : stateManager.getLibrary().getHistory()) {
+                if (!entry.getTime().isBefore(start) && !entry.getTime().isAfter(end)) {
+                    String name = entry.getPlaylistName();
                     if (name != null && !name.isEmpty()) {
                         counts.put(name, counts.getOrDefault(name, 0) + 1);
                         totalPlays++;

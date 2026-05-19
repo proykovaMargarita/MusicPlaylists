@@ -2,7 +2,6 @@ package bg.tu_varna.sit.f24621684.commands.library.playlist;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
-import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 import bg.tu_varna.sit.f24621684.models.Playlist;
 import bg.tu_varna.sit.f24621684.models.song.Song;
 
@@ -13,8 +12,6 @@ import bg.tu_varna.sit.f24621684.models.song.Song;
 public class RemoveFromPlaylistCommand implements Command {
     /** Мениджър на състоянието на приложението */
     private final StateManager stateManager;
-    /** Препратка към музикалната библиотека */
-    private final MusicLibrary library;
 
     /**
      * Конструктор за инициализиране на командата за премахване.
@@ -22,7 +19,6 @@ public class RemoveFromPlaylistCommand implements Command {
      */
     public RemoveFromPlaylistCommand(StateManager stateManager) {
         this.stateManager = stateManager;
-        this.library = stateManager.getLibrary();
     }
 
     /**
@@ -44,10 +40,10 @@ public class RemoveFromPlaylistCommand implements Command {
             return "Error: Invalid song ID. Must be a number.";
         }
 
-        Playlist playlist = library.getPlaylistByName(playlistName);
+        Playlist playlist = stateManager.getLibrary().getPlaylistByName(playlistName);
         if (playlist == null) return "Error: Playlist not found.";
 
-        Song song = library.getSongById(songId);
+        Song song = stateManager.getLibrary().getSongById(songId);
         if (song == null) return "Error: Song not found.";
 
         boolean removed = playlist.getSongs().remove(song);

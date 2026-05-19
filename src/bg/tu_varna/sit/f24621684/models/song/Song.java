@@ -69,7 +69,7 @@ public class Song {
         StringBuilder sb = new StringBuilder();
 
         sb.append(String.format("ID: %d | Song: %s by %s [%s]",
-                ID, artist, title, ParseService.formatSecondsToDuration(durationSeconds)));
+                ID, title, artist, ParseService.formatSecondsToDuration(durationSeconds)));
 
         if (album != null && !album.isEmpty()) {
             sb.append(" | Album: ").append(album);

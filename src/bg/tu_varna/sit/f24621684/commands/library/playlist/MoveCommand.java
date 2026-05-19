@@ -2,7 +2,6 @@ package bg.tu_varna.sit.f24621684.commands.library.playlist;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
-import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 import bg.tu_varna.sit.f24621684.models.Playlist;
 import bg.tu_varna.sit.f24621684.models.song.Song;
 
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 public class MoveCommand implements Command {
     /** Мениджър на състоянието за достъп до данните */
     private final StateManager stateManager;
-    /** Текущата библиотека */
-    private final MusicLibrary library;
 
     /**
      * Конструктор за инициализиране на командата за местене на песен.
@@ -24,7 +21,6 @@ public class MoveCommand implements Command {
      */
     public MoveCommand(StateManager stateManager) {
         this.stateManager = stateManager;
-        this.library = stateManager.getLibrary();
     }
 
     /**
@@ -47,7 +43,7 @@ public class MoveCommand implements Command {
             return "Error: Positions must be numbers.";
         }
 
-        Playlist playlist = library.getPlaylistByName(playlistName);
+        Playlist playlist = stateManager.getLibrary().getPlaylistByName(playlistName);
         if (playlist == null) return "Error: Playlist not found.";
 
         ArrayList<Song> songs = playlist.getSongs();

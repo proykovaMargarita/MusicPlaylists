@@ -2,7 +2,6 @@ package bg.tu_varna.sit.f24621684.commands.library.history;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
-import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 import bg.tu_varna.sit.f24621684.models.PlayHistoryEntry;
 import bg.tu_varna.sit.f24621684.models.song.Song;
 import bg.tu_varna.sit.f24621684.services.ParseService;
@@ -15,8 +14,6 @@ import java.time.LocalDateTime;
 public class PlayAtCommand implements Command {
     /** Мениджър на състоянието на приложението */
     private final StateManager stateManager;
-    /** Препратка към музикалната библиотека */
-    private final MusicLibrary library;
 
     /**
      * Конструктор за създаване на командата PlayAt.
@@ -24,7 +21,6 @@ public class PlayAtCommand implements Command {
      */
     public PlayAtCommand(StateManager stateManager) {
         this.stateManager = stateManager;
-        this.library = stateManager.getLibrary();
     }
 
     /**
@@ -39,7 +35,7 @@ public class PlayAtCommand implements Command {
 
         try {
             int songId = Integer.parseInt(args[0]);
-            Song song = library.getSongById(songId);
+            Song song = stateManager.getLibrary().getSongById(songId);
             if (song == null) return "Error: Song not found.";
 
             LocalDateTime dateTime = ParseService.parseUserDateTime(args[1], args[2]);
@@ -53,7 +49,7 @@ public class PlayAtCommand implements Command {
                     ? PlayHistoryEntry.playAt(song, dateTime, playlistName)
                     : PlayHistoryEntry.playAt(song, dateTime);
 
-            library.getHistory().add(entry);
+            stateManager.getLibrary().getHistory().add(entry);
             return "Successfully recorded historical play: " + song.getTitle() + " at " + dateTime;
 
         } catch (Exception e) {

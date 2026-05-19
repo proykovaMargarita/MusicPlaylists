@@ -12,5 +12,9 @@ public enum Genre {
     /** Латино музика */
     LATINO,
     /** Техно музика */
-    TECHNO
+    TECHNO,
+    /** Рап музика */
+    RAP,
+    /** Фолк музика */
+    FOLK
 }

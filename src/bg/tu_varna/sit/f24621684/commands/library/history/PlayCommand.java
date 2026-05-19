@@ -2,7 +2,6 @@ package bg.tu_varna.sit.f24621684.commands.library.history;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
-import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 import bg.tu_varna.sit.f24621684.models.PlayHistoryEntry;
 import bg.tu_varna.sit.f24621684.models.song.Song;
 
@@ -13,8 +12,6 @@ import bg.tu_varna.sit.f24621684.models.song.Song;
 public class PlayCommand implements Command {
     /** Мениджър на състоянието на приложението */
     private final StateManager stateManager;
-    /** Препратка към музикалната библиотека */
-    private final MusicLibrary library;
 
     /**
      * Конструктор за създаване на командата Play.
@@ -22,7 +19,6 @@ public class PlayCommand implements Command {
      */
     public PlayCommand(StateManager stateManager) {
         this.stateManager = stateManager;
-        this.library = stateManager.getLibrary();
     }
 
     /**
@@ -37,7 +33,7 @@ public class PlayCommand implements Command {
 
         try {
             int songId = Integer.parseInt(args[0]);
-            Song song = library.getSongById(songId);
+            Song song = stateManager.getLibrary().getSongById(songId);
             if (song == null) return "Error: Song not found.";
 
             String playlistName = null;
@@ -52,7 +48,7 @@ public class PlayCommand implements Command {
                 entry = PlayHistoryEntry.play(song);
             }
 
-            library.getHistory().add(entry);
+            stateManager.getLibrary().getHistory().add(entry);
             return "Successfully recorded play: " + song.getTitle();
 
         } catch (NumberFormatException e) {

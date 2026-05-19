@@ -2,7 +2,6 @@ package bg.tu_varna.sit.f24621684.commands.library.playlist;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
-import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 import bg.tu_varna.sit.f24621684.models.Playlist;
 import bg.tu_varna.sit.f24621684.models.song.Song;
 import bg.tu_varna.sit.f24621684.services.ParseService;
@@ -14,8 +13,6 @@ import bg.tu_varna.sit.f24621684.services.ParseService;
 public class ShowPlaylistCommand implements Command {
     /** Мениджър на състоянието */
     private final StateManager stateManager;
-    /** Текущата музикална библиотека */
-    private final MusicLibrary library;
 
     /**
      * Конструктор за инициализиране на командата за показване на плейлист.
@@ -23,7 +20,6 @@ public class ShowPlaylistCommand implements Command {
      */
     public ShowPlaylistCommand(StateManager stateManager) {
         this.stateManager = stateManager;
-        this.library = stateManager.getLibrary();
     }
 
     /**
@@ -36,7 +32,7 @@ public class ShowPlaylistCommand implements Command {
         if (!stateManager.isFileOpen()) return "Error: No file is open.";
         if (args.length < 1) return "Error: Usage - showplaylist <name>";
 
-        Playlist playlist = library.getPlaylistByName(args[0]);
+        Playlist playlist = stateManager.getLibrary().getPlaylistByName(args[0]);
         if (playlist == null) return "Error: Playlist not found.";
 
         int totalSeconds = 0;

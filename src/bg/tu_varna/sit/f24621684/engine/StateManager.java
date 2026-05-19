@@ -24,7 +24,7 @@ public class StateManager {
      */
     public StateManager() {
         this.isFileOpen = false;
-        this.library = null;
+        this.library = new MusicLibrary();
         this.currentFilePath = null;
     }
 

@@ -2,7 +2,6 @@ package bg.tu_varna.sit.f24621684.commands.library.song;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
-import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 import bg.tu_varna.sit.f24621684.models.song.Genre;
 import bg.tu_varna.sit.f24621684.models.song.Song;
 import bg.tu_varna.sit.f24621684.models.song.SongBuilder;
@@ -15,8 +14,6 @@ import bg.tu_varna.sit.f24621684.services.ParseService;
 public class AddSongCommand implements Command {
     /** Текущо състояние на програмата */
     private final StateManager stateManager;
-    /** Текуща музикална библиотека */
-    private final MusicLibrary library;
 
     /**
      * Конструктор за създаване на командата Add song.
@@ -25,7 +22,6 @@ public class AddSongCommand implements Command {
      */
     public AddSongCommand(StateManager stateManager) {
         this.stateManager = stateManager;
-        this.library = stateManager.getLibrary();
     }
 
     /**
@@ -41,7 +37,7 @@ public class AddSongCommand implements Command {
         if (args.length < 3) return "Invalid song data.";
 
         try{
-            int newId = library.getSongs().isEmpty() ? 0 : library.getSongs().getLast().getID() + 1;
+            int newId = stateManager.getLibrary().getSongs().isEmpty() ? 0 : stateManager.getLibrary().getSongs().getLast().getID() + 1;
 
             SongBuilder builder = new SongBuilder(
                     newId,
@@ -54,8 +50,8 @@ public class AddSongCommand implements Command {
                 String arg = args[i];
                 if (arg.contains("=")) {
                     String[] parts = arg.split("=", 2);
-                    String key = parts[0].toLowerCase();
-                    String value = parts[1];
+                    String key = parts[0].trim().toLowerCase();
+                    String value = parts[1].trim();
 
                     switch (key) {
                         case "album":
@@ -76,7 +72,7 @@ public class AddSongCommand implements Command {
             }
 
             Song song = builder.build();
-            library.addSong(song);
+            stateManager.getLibrary().addSong(song);
         } catch (Exception e){
             return "Error: " + e.getMessage();
         }
@@ -90,6 +86,6 @@ public class AddSongCommand implements Command {
      */
     @Override
     public String getDescription() {
-        return "(<title> <artist> <duration> [album=<album>] [year=<year>] [genre=<genre>]) Adds a song to the library";
+        return "(<title> | <artist> | <duration> | [album=<album>] | [year=<year>] | [genre=<genre>]) Adds a song to the library";
     }
 }

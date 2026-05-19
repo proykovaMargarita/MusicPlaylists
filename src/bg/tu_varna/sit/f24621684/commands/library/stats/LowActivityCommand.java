@@ -2,7 +2,6 @@ package bg.tu_varna.sit.f24621684.commands.library.stats;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
-import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 import bg.tu_varna.sit.f24621684.models.PlayHistoryEntry;
 import bg.tu_varna.sit.f24621684.services.ParseService;
 import java.time.LocalDate;
@@ -16,8 +15,6 @@ import java.util.*;
 public class LowActivityCommand implements Command {
     /** Мениджър на състоянието на приложението */
     private final StateManager stateManager;
-    /** Музикалната библиотека за достъп до данните */
-    private final MusicLibrary library;
 
     /**
      * Конструктор за създаване на командата LowActivity.
@@ -25,7 +22,6 @@ public class LowActivityCommand implements Command {
      */
     public LowActivityCommand(StateManager stateManager) {
         this.stateManager = stateManager;
-        this.library = stateManager.getLibrary();
     }
 
     /**
@@ -49,9 +45,11 @@ public class LowActivityCommand implements Command {
             Map<String, Integer> counts = new HashMap<>();
             int totalPlays = 0;
 
-            for (PlayHistoryEntry entry : library.getHistory()) {
+            for (PlayHistoryEntry entry : stateManager.getLibrary().getHistory()) {
+                String name = entry.getPlaylistName();
+                counts.put(name, 0);
                 if (!entry.getTime().isBefore(start) && !entry.getTime().isAfter(end)) {
-                    String name = entry.getPlaylistName();
+
                     if (name != null && !name.isEmpty()) {
                         counts.put(name, counts.getOrDefault(name, 0) + 1);
                         totalPlays++;

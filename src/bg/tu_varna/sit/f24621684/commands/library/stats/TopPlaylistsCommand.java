@@ -2,7 +2,6 @@ package bg.tu_varna.sit.f24621684.commands.library.stats;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
-import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 import bg.tu_varna.sit.f24621684.models.PlayHistoryEntry;
 import bg.tu_varna.sit.f24621684.services.ParseService;
 
@@ -17,8 +16,6 @@ import java.util.*;
 public class TopPlaylistsCommand implements Command {
     /** Мениджър на състоянието на приложението */
     private final StateManager stateManager;
-    /** Текущата музикална библиотека */
-    private final MusicLibrary library;
 
     /**
      * Конструктор за създаване на командата TopPlaylists.
@@ -26,7 +23,6 @@ public class TopPlaylistsCommand implements Command {
      */
     public TopPlaylistsCommand(StateManager stateManager) {
         this.stateManager = stateManager;
-        this.library = stateManager.getLibrary();
     }
 
     /**
@@ -50,7 +46,7 @@ public class TopPlaylistsCommand implements Command {
         LocalDateTime end = (to != null) ? to.atTime(23, 59, 59) : LocalDateTime.MAX;
 
         Map<String, Integer> counts = new HashMap<>();
-        for (PlayHistoryEntry entry : library.getHistory()) {
+        for (PlayHistoryEntry entry : stateManager.getLibrary().getHistory()) {
             if (entry.getTime().isBefore(start) || entry.getTime().isAfter(end)) {
                 continue;
             }

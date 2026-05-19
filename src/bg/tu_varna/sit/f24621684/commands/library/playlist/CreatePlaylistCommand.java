@@ -2,7 +2,6 @@ package bg.tu_varna.sit.f24621684.commands.library.playlist;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
-import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 import bg.tu_varna.sit.f24621684.models.Playlist;
 import bg.tu_varna.sit.f24621684.models.song.Song;
 
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 public class CreatePlaylistCommand implements Command {
     /** Обект за управление на състоянието на библиотеката */
     private final StateManager stateManager;
-    /** Текущата музикална библиотека */
-    private final MusicLibrary library;
 
     /**
      * Конструктор за създаване на командата CreatePlaylist.
@@ -24,7 +21,6 @@ public class CreatePlaylistCommand implements Command {
      */
     public CreatePlaylistCommand(StateManager stateManager) {
         this.stateManager = stateManager;
-        this.library = stateManager.getLibrary();
     }
 
     /**
@@ -39,7 +35,7 @@ public class CreatePlaylistCommand implements Command {
 
         String name = args[0];
 
-        for (Playlist p : library.getPlaylists()) {
+        for (Playlist p : stateManager.getLibrary().getPlaylists()) {
             if (p.getName().equalsIgnoreCase(name)) {
                 return "Error: This playlist already exists.";
             }
@@ -55,7 +51,7 @@ public class CreatePlaylistCommand implements Command {
         }
 
         Playlist newPlaylist = new Playlist(name, new ArrayList<Song>(), description);
-        library.getPlaylists().add(newPlaylist);
+        stateManager.getLibrary().getPlaylists().add(newPlaylist);
 
         return "Successfully created playlist.";
     }

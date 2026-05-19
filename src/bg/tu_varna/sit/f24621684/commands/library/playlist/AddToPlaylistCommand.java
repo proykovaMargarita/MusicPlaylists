@@ -2,7 +2,6 @@ package bg.tu_varna.sit.f24621684.commands.library.playlist;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
-import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 import bg.tu_varna.sit.f24621684.models.Playlist;
 import bg.tu_varna.sit.f24621684.models.song.Song;
 
@@ -13,8 +12,6 @@ import bg.tu_varna.sit.f24621684.models.song.Song;
 public class AddToPlaylistCommand implements Command {
     /** Мениджър за управление на състоянието на системата */
     private final StateManager stateManager;
-    /** Музикалната библиотека, в която се намира плейлистът */
-    private final MusicLibrary library;
 
     /**
      * Конструктор за инициализиране на командата за добавяне в плейлист.
@@ -22,7 +19,6 @@ public class AddToPlaylistCommand implements Command {
      */
     public AddToPlaylistCommand(StateManager stateManager) {
         this.stateManager = stateManager;
-        this.library = stateManager.getLibrary();
     }
 
     /**
@@ -56,12 +52,14 @@ public class AddToPlaylistCommand implements Command {
             }
         }
 
-        Playlist playlist = library.getPlaylistByName(playlistName);
+        Playlist playlist = stateManager.getLibrary().getPlaylistByName(playlistName);
 
         if (playlist == null) return "Error: Playlist not found.";
 
-        Song song = library.getSongById(songId);
+        Song song = stateManager.getLibrary().getSongById(songId);
         if (song == null) return "Error: Song not found.";
+
+        if (playlist.getSongs().contains(song)) return "Song already added to playlist.";
 
         if (position >= 0 && position < playlist.getSongs().size()) {
             playlist.addSongAt(position, song);

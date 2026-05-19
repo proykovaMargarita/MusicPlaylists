@@ -2,7 +2,6 @@ package bg.tu_varna.sit.f24621684.commands.library.history;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
-import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 import bg.tu_varna.sit.f24621684.models.PlayHistoryEntry;
 import bg.tu_varna.sit.f24621684.services.ParseService;
 import java.time.LocalDate;
@@ -15,8 +14,6 @@ import java.time.LocalDateTime;
 public class PlaysCommand implements Command {
     /** Мениджър на състоянието на системата */
     private final StateManager stateManager;
-    /** Музикалната библиотека за достъп до хронологията */
-    private final MusicLibrary library;
 
     /**
      * Конструктор за създаване на командата Plays.
@@ -24,7 +21,6 @@ public class PlaysCommand implements Command {
      */
     public PlaysCommand(StateManager stateManager) {
         this.stateManager = stateManager;
-        this.library = stateManager.getLibrary();
     }
 
     /**
@@ -51,7 +47,7 @@ public class PlaysCommand implements Command {
         LocalDateTime end = (to != null) ? to.atTime(23, 59, 59) : LocalDateTime.MAX;
 
         StringBuilder sb = new StringBuilder("Play history report:\n");
-        for (PlayHistoryEntry entry : library.getHistory()) {
+        for (PlayHistoryEntry entry : stateManager.getLibrary().getHistory()) {
             boolean matches = !entry.getTime().isBefore(start) && !entry.getTime().isAfter(end);
             if (playlist != null && !playlist.equalsIgnoreCase(entry.getPlaylistName())) matches = false;
             if (songId != null && entry.getSong().getID() != songId) matches = false;

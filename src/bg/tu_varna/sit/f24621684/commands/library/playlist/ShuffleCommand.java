@@ -2,7 +2,6 @@ package bg.tu_varna.sit.f24621684.commands.library.playlist;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
-import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 import bg.tu_varna.sit.f24621684.models.Playlist;
 
 import java.util.Collections;
@@ -15,8 +14,6 @@ import java.util.Random;
 public class ShuffleCommand implements Command {
     /** Обект за управление на състоянието */
     private final StateManager stateManager;
-    /** Текущата библиотека за достъп до плейлистите */
-    private final MusicLibrary library;
 
     /**
      * Конструктор за инициализиране на командата Shuffle.
@@ -24,7 +21,6 @@ public class ShuffleCommand implements Command {
      */
     public ShuffleCommand(StateManager stateManager) {
         this.stateManager = stateManager;
-        this.library = stateManager.getLibrary();
     }
 
     /**
@@ -38,7 +34,7 @@ public class ShuffleCommand implements Command {
         if (args.length < 1) return "Error: Usage - shuffle <playlistName> [seed=<n>]";
 
         String playlistName = args[0];
-        Playlist playlist = library.getPlaylistByName(playlistName);
+        Playlist playlist = stateManager.getLibrary().getPlaylistByName(playlistName);
         if (playlist == null) return "Error: Playlist not found.";
 
         if (args.length > 1 && args[1].startsWith("seed=")) {

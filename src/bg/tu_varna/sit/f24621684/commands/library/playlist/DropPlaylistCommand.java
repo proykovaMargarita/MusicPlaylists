@@ -2,7 +2,6 @@ package bg.tu_varna.sit.f24621684.commands.library.playlist;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
-import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 
 /**
  * Команда за премахване на плейлист от музикалната библиотека.
@@ -11,8 +10,6 @@ import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 public class DropPlaylistCommand implements Command {
     /** Обект за управление на състоянието */
     private final StateManager stateManager;
-    /** Текущата музикална библиотека */
-    private final MusicLibrary library;
 
     /**
      * Конструктор за инициализиране на командата за изтриване.
@@ -20,7 +17,6 @@ public class DropPlaylistCommand implements Command {
      */
     public DropPlaylistCommand(StateManager stateManager) {
         this.stateManager = stateManager;
-        this.library = stateManager.getLibrary();
     }
 
     /**
@@ -33,7 +29,7 @@ public class DropPlaylistCommand implements Command {
         if (!stateManager.isFileOpen()) return "Error: No file is open.";
         if (args.length < 1) return "Error: Usage - dropplaylist <name>";
 
-        boolean removed = library.removePlaylist(args[0]);
+        boolean removed = stateManager.getLibrary().removePlaylist(args[0]);
         return removed ? "Playlist deleted." : "Error: Playlist not found.";
     }
 

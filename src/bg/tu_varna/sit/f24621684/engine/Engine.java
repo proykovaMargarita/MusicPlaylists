@@ -45,9 +45,14 @@ public class Engine {
 
             if (input.isEmpty()) continue;
 
-            String[] parts = input.split("\\s+");
+            String[] parts = input.split("\\s+", 2);
             String commandName = parts[0].toLowerCase();
-            String[] args = Arrays.copyOfRange(parts, 1, parts.length);
+
+            String[] args = new String[0];
+
+            if (parts.length > 1) {
+                args = parts[1].split("\\s*\\|\\s*");
+            }
 
             if (commands.containsKey(commandName)) {
                 try {

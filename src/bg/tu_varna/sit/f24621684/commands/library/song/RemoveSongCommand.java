@@ -2,7 +2,6 @@ package bg.tu_varna.sit.f24621684.commands.library.song;
 
 import bg.tu_varna.sit.f24621684.commands.Command;
 import bg.tu_varna.sit.f24621684.engine.StateManager;
-import bg.tu_varna.sit.f24621684.models.MusicLibrary;
 import bg.tu_varna.sit.f24621684.models.Playlist;
 import bg.tu_varna.sit.f24621684.models.song.Song;
 
@@ -13,8 +12,6 @@ import bg.tu_varna.sit.f24621684.models.song.Song;
 public class RemoveSongCommand implements Command {
     /** Текущо състояние на програмата */
     private final StateManager stateManager;
-    /** Текуща музикална библиотека */
-    private final MusicLibrary library;
 
     /**
      * Конструктор за създаване на командата Remove song.
@@ -23,7 +20,6 @@ public class RemoveSongCommand implements Command {
      */
     public RemoveSongCommand(StateManager stateManager) {
         this.stateManager = stateManager;
-        this.library = stateManager.getLibrary();
     }
 
     /**
@@ -38,12 +34,12 @@ public class RemoveSongCommand implements Command {
         if (args.length < 1) return "Enter song ID.";
 
         try {
-            Song song = library.getSongById(Integer.parseInt(args[0]));
+            Song song = stateManager.getLibrary().getSongById(Integer.parseInt(args[0]));
             if (song != null){
-                for (Playlist playlist : library.getPlaylists()){
+                for (Playlist playlist : stateManager.getLibrary().getPlaylists()){
                     playlist.getSongs().remove(song);
                 }
-                library.getSongs().remove(song);
+                stateManager.getLibrary().getSongs().remove(song);
             } else {
                 return "No song found with specified ID. No changes were made.";
             }
